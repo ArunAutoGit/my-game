@@ -1,27 +1,27 @@
 const imageFiles = [
-  'image/Liam_Livingstone_All Rounder.png',
-  'image/Lungisani_Ngidi_Bowler.png',
-  'image/Manoj_Bhandage_All Rounder.png',
-  'image/Mayank_Agarwal_Batter.png',
-  'image/Mohit_Rathee_Bowler.png',
-  'image/Nuwan_Thushara_Bowler.png',
-  'image/Phil_Salt_WK-Batter.png',
-  'image/Rajat_Patidar_Batter.png',
-  'image/Rasikh_Dar_Bowler.png',
-  'image/Romario_Shepherd_All Rounder.png',
-  'image/Suyash_Sharma_Bowler.png',
-  'image/Swapnil_Singh_All Rounder.png',
-  'image/Swastik_Chhikara_Batter.png',
-  'image/Tim_David_All Rounder.png',
-  'image/Tim_Seifert_WK-Batter.png',
-  'image/Virat_Kohli_Batter.png',
-  'image/Yash_Dayal_Bowler.png',
-  'image/Abhinandan_Singh_Bowler.png',
-  'image/Bhuvneshwar_Kumar_Bowler.png',
-  'image/Blessing_Muzarabani_Bowler.png',
-  'image/Jitesh_Sharma_WK-Batter.png',
-  'image/Josh_Hazlewood_Bowler.png',
-  'image/Krunal_Pandya_All Rounder.png'
+  'images/Liam_Livingstone_All Rounder.png',
+  'images/Lungisani_Ngidi_Bowler.png',
+  'images/Manoj_Bhandage_All Rounder.png',
+  'images/Mayank_Agarwal_Batter.png',
+  'images/Mohit_Rathee_Bowler.png',
+  'images/Nuwan_Thushara_Bowler.png',
+  'images/Phil_Salt_WK-Batter.png',
+  'images/Rajat_Patidar_Batter.png',
+  'images/Rasikh_Dar_Bowler.png',
+  'images/Romario_Shepherd_All Rounder.png',
+  'images/Suyash_Sharma_Bowler.png',
+  'images/Swapnil_Singh_All Rounder.png',
+  'images/Swastik_Chhikara_Batter.png',
+  'images/Tim_David_All Rounder.png',
+  'images/Tim_Seifert_WK-Batter.png',
+  'images/Virat_Kohli_Batter.png',
+  'images/Yash_Dayal_Bowler.png',
+  'images/Abhinandan_Singh_Bowler.png',
+  'images/Bhuvneshwar_Kumar_Bowler.png',
+  'images/Blessing_Muzarabani_Bowler.png',
+  'images/Jitesh_Sharma_WK-Batter.png',
+  'images/Josh_Hazlewood_Bowler.png',
+  'images/Krunal_Pandya_All Rounder.png'
 ];
 
 const players = [
@@ -227,7 +227,7 @@ function generateNextCard() {
 }
 
 function startGame() {
-  remainingCards = shuffleArray([...imageFiles]);
+  remainingCards = shuffleArray([...imagesFiles]);
   generateNextCard();
 }
 
