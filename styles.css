@@ -6,28 +6,34 @@ body {
   display: flex;
   flex-direction: row;
   transition: background 2s ease-in-out;
-  overflow: hidden;
   background: #f5f5f5;
 }
 
 /* === MAIN CONTAINER === */
-.main-container {
+#gameSection {
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+
+/* === LEFT CONTENT (Card + Logs) === */
+.left-pane {
+  flex: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 /* === CARD SECTION === */
-.card-container {
+#cardContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px 0;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .rounded-card {
@@ -57,7 +63,7 @@ body {
 }
 
 /* === WINNER DISPLAY === */
-.winner-display {
+#winnerDisplay {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -67,11 +73,13 @@ body {
 
 /* === LOG SECTION === */
 .log-wrapper {
-  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   margin-top: 10px;
-  max-width: 90%;
+  padding: 10px 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .log-panel {
@@ -94,15 +102,14 @@ body {
   color: #ff0000;
 }
 
-/* === SCOREBOARD === */
+/* === SCOREBOARD (Right Pane) === */
 .scoreboard-tab {
-  width: 700px;
+  flex: 1;
   background: #ffffffee;
   border-left: 2px solid #ccc;
   padding: 20px;
-  border-radius: 20px;
-  margin: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  border-radius: 20px 0 0 20px;
+  box-shadow: -2px 0 15px rgba(0, 0, 0, 0.15);
   overflow-y: auto;
 }
 
@@ -120,6 +127,19 @@ body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.team-header img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
 .player-name {
   font-weight: bold;
   font-size: 16px;
@@ -133,9 +153,25 @@ body {
   margin-bottom: 3px;
 }
 
-h3 {
+/* === TEAM CARD SELECTION MODAL === */
+.team-card {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 6px;
+  margin: 5px;
+  border-radius: 6px;
   text-align: center;
-  margin-top: 0;
+  cursor: pointer;
+}
+
+.team-card.selected {
+  border: 2px solid #007bff;
+  background: #e6f0ff;
+}
+
+.team-card img {
+  display: block;
+  margin: 0 auto 4px;
 }
 
 /* === MODAL === */
@@ -175,61 +211,13 @@ h3 {
   font-size: 14px;
   cursor: pointer;
 }
-.team-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
 
-.team-header img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-}
-
-.player-box {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 8px;
-  margin: 8px;
-  background: #fdfdfd;
-}
-
-.player-name {
-  font-weight: bold;
-  font-size: 1em;
-}
-
-.card-entry {
-  padding: 2px 0;
-  font-size: 0.9em;
-}
-
-.team-card {
-  display: inline-block;
-  border: 1px solid #ccc;
-  padding: 6px;
-  margin: 5px;
-  border-radius: 6px;
-  text-align: center;
-  cursor: pointer;
-}
-.team-card.selected {
-  border: 2px solid #007bff;
-  background: #e6f0ff;
-}
-.team-card img {
-  display: block;
-  margin: 0 auto 4px;
-}
-
+/* === TIMER === */
 #bidTimer {
   font-weight: bold;
   margin-top: 5px;
 }
 
-/* === TIMER === */
 .timer-bar {
   height: 10px;
   width: 100%;
@@ -248,22 +236,20 @@ h3 {
 
 /* === RESPONSIVE BREAKPOINTS === */
 @media (max-width: 1024px) {
-  body {
+  #gameSection {
     flex-direction: column;
-    overflow: auto;
   }
-
   .scoreboard-tab {
     width: 95%;
     border-left: none;
     border-top: 2px solid #ccc;
     margin: 10px auto;
+    border-radius: 20px;
+    box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.15);
   }
-
-  .main-container {
-    padding: 5px;
+  .left-pane {
+    align-items: center;
   }
-
   .rounded-card {
     width: 220px;
   }
@@ -274,12 +260,10 @@ h3 {
     width: 100%;
     max-width: 300px;
   }
-
   .log-wrapper {
     max-width: 100%;
     margin: 10px auto;
   }
-
   .modal-content {
     width: 95%;
   }
