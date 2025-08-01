@@ -1,3 +1,4 @@
+//---------------------------- Data ----------------------------//
 const imageFiles = [
   'image/Liam_Livingstone_All Rounder.png',
   'image/Lungisani_Ngidi_Bowler.png',
@@ -24,22 +25,23 @@ const imageFiles = [
   'image/Krunal_Pandya_All Rounder.png'
 ];
 
-const players = [
-  "Player 1",  // Human player
-  "CSK",       // Chennai Super Kings
-  "MI",        // Mumbai Indians
-  "RCB",       // Royal Challengers Bangalore
-  "KKR",       // Kolkata Knight Riders
-  "SRH",       // Sunrisers Hyderabad
-  "DC",        // Delhi Capitals
-  "PBKS",      // Punjab Kings
-  "RR",        // Rajasthan Royals
-  "LSG",        // Lucknow Super Giants
-  "GT"
-];
-const scoreboard = {};
-players.forEach(p => scoreboard[p] = []);
+const allTeams = ["CSK", "MI", "RCB", "KKR", "SRH", "DC", "PBKS", "RR", "LSG", "GT"];
+const teamLogos = {
+  "CSK": "logos/CSK.PNG",
+  "MI": "logos/MI.PNG",
+  "RCB": "logos/RCB.PNG",
+  "KKR": "logos/KKR.PNG",
+  "SRH": "logos/SRH.PNG",
+  "DC": "logos/DC.PNG",
+  "PBKS": "logos/PBKS.PNG",
+  "RR": "logos/RR.PNG",
+  "LSG": "logos/LSG.PNG",
+  "GT": "logos/GT.PNG"
+};
 
+//---------------------------- Game State ----------------------------//
+let players = [];
+let scoreboard = {};
 let currentPlayerName = "";
 let remainingCards = [];
 let bidCount = 0;
@@ -47,15 +49,18 @@ let playerIndex = -1;
 let highestBid = 0;
 let highestBidder = "";
 let timerInterval, timeLeft;
+let playerOneTeam = "Player 1";
+let selectedTeam = null;
 
+//---------------------------- Utilities ----------------------------//
 function shuffleArray(arr) {
   return arr.sort(() => Math.random() - 0.5);
 }
-
 function clearHighlight() {
   document.querySelectorAll('.log-entry').forEach(e => e.classList.remove('highlight'));
 }
 
+//---------------------------- Logging ----------------------------//
 function logBid(who, bidAmount, didBid = true) {
   const logPanel = document.getElementById("logPanel");
   const entry = document.createElement("div");
@@ -72,15 +77,14 @@ function logBid(who, bidAmount, didBid = true) {
   } else {
     entry.textContent = `⏭️ ${who} skipped bidding`;
   }
-
   logPanel.prepend(entry);
 }
 
+//---------------------------- Timer ----------------------------//
 function updateTimerUI() {
   document.getElementById("bidTimer").textContent = `⏳ Time left: ${timeLeft}s`;
   document.getElementById("timerFill").style.width = `${(timeLeft / 10) * 100}%`;
 }
-
 function startTimer() {
   timeLeft = 10;
   updateTimerUI();
@@ -94,34 +98,29 @@ function startTimer() {
   }, 1000);
 }
 
+//---------------------------- Bidding ----------------------------//
 function playerBid(name) {
   document.getElementById("modalPrompt").textContent = `${name}, bid for ${currentPlayerName}`;
   document.getElementById("bidInput").value = '';
   document.getElementById("bidModal").style.display = "block";
   startTimer();
 }
-
 function submitBid() {
   clearInterval(timerInterval);
   const val = parseFloat(document.getElementById("bidInput").value);
   bidCount++;
   document.getElementById("bidModal").style.display = "none";
-  if (!val || isNaN(val)) {
-    logBid("Player 1", 0, false);
-  } else {
-    logBid("Player 1", val, true);
-  }
+  if (!val || isNaN(val)) logBid(playerOneTeam, 0, false);
+  else logBid(playerOneTeam, val, true);
   nextTurn();
 }
-
 function skipBid() {
   clearInterval(timerInterval);
   bidCount++;
   document.getElementById("bidModal").style.display = "none";
-  logBid("Player 1", 0, false);
+  logBid(playerOneTeam, 0, false);
   nextTurn();
 }
-
 function computerBid(name) {
   bidCount++;
   const willBid = Math.random() > 0.5;
@@ -129,48 +128,36 @@ function computerBid(name) {
   logBid(name, bid, willBid);
   setTimeout(nextTurn, 500);
 }
-
 function nextTurn() {
   if (bidCount >= players.length) {
     if (!highestBidder) {
       bidCount = 0;
-      playerBid("Player 1");
-    } else {
-      announceWinner();
-    }
+      playerBid(playerOneTeam);
+    } else announceWinner();
     return;
   }
-
   playerIndex = (playerIndex + 1) % players.length;
   const player = players[playerIndex];
-
-  if (player === "Player 1") {
-    playerBid(player);
-  } else {
-    computerBid(player);
-  }
+  if (player === playerOneTeam) playerBid(playerOneTeam);
+  else computerBid(player);
 }
 
+//---------------------------- Winner ----------------------------//
 function announceWinner() {
   const result = document.getElementById("winnerDisplay");
   if (highestBidder) {
     result.textContent = `🏆 ${highestBidder} wins ${currentPlayerName} for $${highestBid}`;
     scoreboard[highestBidder].push({ name: currentPlayerName, bid: highestBid });
-  } else {
-    result.textContent = `❌ No bids for ${currentPlayerName}`;
-  }
+  } else result.textContent = `❌ No bids for ${currentPlayerName}`;
 
   updateScoreboard();
-
   setTimeout(() => {
-    if (remainingCards.length > 0) {
-      generateNextCard();
-    } else {
-      result.textContent = "🎉 Game Over!";
-    }
+    if (remainingCards.length > 0) generateNextCard();
+    else result.textContent = "🎉 Game Over!";
   }, 3000);
 }
 
+//---------------------------- Scoreboard ----------------------------//
 function updateScoreboard() {
   const container = document.getElementById("gridContainer");
   container.innerHTML = '';
@@ -179,12 +166,25 @@ function updateScoreboard() {
     const box = document.createElement("div");
     box.className = "player-box";
 
+    // --- Team Header ---
+    const header = document.createElement("div");
+    header.className = "team-header";
+
+    const logo = document.createElement("img");
+    logo.src = teamLogos[p] || "logos/default.png";
+    logo.alt = p;
+    logo.width = 32;
+    logo.height = 32;
+
     const name = document.createElement("div");
     name.className = "player-name";
     name.textContent = p;
 
-    box.appendChild(name);
+    header.appendChild(logo);
+    header.appendChild(name);
+    box.appendChild(header);
 
+    // --- Bought Players ---
     scoreboard[p].forEach(entry => {
       const card = document.createElement("div");
       card.className = "card-entry";
@@ -196,6 +196,7 @@ function updateScoreboard() {
   });
 }
 
+//---------------------------- Cards ----------------------------//
 function generateNextCard() {
   const container = document.getElementById("cardContainer");
   container.innerHTML = '';
@@ -226,9 +227,56 @@ function generateNextCard() {
   nextTurn();
 }
 
+//---------------------------- Team Selection ----------------------------//
+function showTeamSelection() {
+  const teamListDiv = document.getElementById("teamList");
+  teamListDiv.innerHTML = '';
+
+  allTeams.forEach(team => {
+    const card = document.createElement("div");
+    card.className = "team-card";
+    card.onclick = () => selectTeam(team, card);
+
+    const logo = document.createElement("img");
+    logo.src = teamLogos[team];
+    logo.alt = team;
+    logo.width = 32;
+    logo.height = 32;
+
+    const name = document.createElement("div");
+    name.textContent = team;
+    name.className = "team-name";
+
+    card.appendChild(logo);
+    card.appendChild(name);
+    teamListDiv.appendChild(card);
+  });
+
+  document.getElementById("teamSelectModal").style.display = "block";
+}
+function selectTeam(team, cardElement) {
+  selectedTeam = team;
+  document.querySelectorAll(".team-card").forEach(c => c.classList.remove("selected"));
+  cardElement.classList.add("selected");
+}
+function confirmTeam() {
+  if (!selectedTeam) {
+    alert("Please select a team");
+    return;
+  }
+  playerOneTeam = selectedTeam;
+  players = [playerOneTeam, ...allTeams.filter(t => t !== playerOneTeam)];
+  scoreboard = {};
+  players.forEach(p => scoreboard[p] = []);
+  document.getElementById("teamSelectModal").style.display = "none";
+  startGame();
+}
+
+//---------------------------- Game Start ----------------------------//
 function startGame() {
   remainingCards = shuffleArray([...imageFiles]);
   generateNextCard();
 }
 
-startGame();
+//---------------------------- Entry ----------------------------//
+showTeamSelection();
