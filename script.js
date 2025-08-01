@@ -227,7 +227,7 @@ function generateNextCard() {
 }
 
 function startGame() {
-  remainingCards = shuffleArray([...imagesFiles]);
+  remainingCards = shuffleArray([...imageFiles]);
   generateNextCard();
 }
 
