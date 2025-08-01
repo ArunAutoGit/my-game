@@ -1,16 +1,4 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
-  transition: background 2s ease-in-out;
-  overflow: hidden;
-}
-
-.main-container {
-  flex: 1;
-  display: flex;/* === GLOBAL RESET === */
+/* === GLOBAL RESET === */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -187,6 +175,54 @@ h3 {
   font-size: 14px;
   cursor: pointer;
 }
+.team-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.team-header img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.player-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  background: #fdfdfd;
+}
+
+.player-name {
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.card-entry {
+  padding: 2px 0;
+  font-size: 0.9em;
+}
+
+.team-card {
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 6px;
+  margin: 5px;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+}
+.team-card.selected {
+  border: 2px solid #007bff;
+  background: #e6f0ff;
+}
+.team-card img {
+  display: block;
+  margin: 0 auto 4px;
+}
 
 #bidTimer {
   font-weight: bold;
@@ -247,175 +283,4 @@ h3 {
   .modal-content {
     width: 95%;
   }
-}
-
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
-
-.card-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.rounded-card {
-  width: 280px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.rounded-card img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  border-radius: 10px;
-}
-
-.card-name {
-  font-weight: bold;
-  font-size: 18px;
-  margin-top: 10px;
-  color: #444;
-}
-
-.winner-display {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: green;
-  margin: 5px;
-}
-
-.log-wrapper {
-  padding: 10px 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  margin-top: 10px;
-  max-width: 90%;
-}
-
-.log-panel {
-  font-size: 14px;
-  color: #222;
-  display: flex;
-  flex-direction: column-reverse;
-  max-height: 250px;
-  overflow-y: auto;
-}
-
-.log-entry {
-  padding: 5px 0;
-  border-top: 1px solid #ddd;
-}
-
-.log-entry.highlight {
-  font-weight: bold;
-  font-size: 18px;
-  color: #ff0000;
-}
-
-.scoreboard-tab {
-  width: 700px;
-  background-color: #ffffffee;
-  border-left: 2px solid #ccc;
-  padding: 20px;
-  border-radius: 20px;
-  margin: 10px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.player-box {
-  border: 2px solid #ddd;
-  border-radius: 12px;
-  padding: 10px;
-  background-color: #fafafa;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
-.player-name {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.card-entry {
-  font-size: 14px;
-  margin-left: 10px;
-  margin-bottom: 3px;
-}
-
-h3 {
-  text-align: center;
-  margin-top: 0;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: white;
-  margin: 15% auto;
-  padding: 20px 30px;
-  border-radius: 12px;
-  width: 300px;
-  text-align: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-}
-
-.modal-content input {
-  margin-top: 10px;
-  width: 80%;
-  padding: 8px;
-  font-size: 14px;
-}
-
-.modal-content button {
-  margin-top: 10px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-#bidTimer {
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-.timer-bar {
-  height: 10px;
-  width: 100%;
-  background-color: #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-top: 10px;
-}
-
-.timer-fill {
-  height: 100%;
-  background-color: #ff4444;
-  width: 100%;
-  transition: width 1s linear;
 }
