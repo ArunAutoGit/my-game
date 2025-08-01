@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bidding Game with Timer</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bidding Game</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="main-container">
-    <div class="card-container" id="cardContainer"></div>
-    <div class="winner-display" id="winnerDisplay"></div>
+  <!-- Lobby Section -->
+  <div id="lobbySection">
+    <h3>Join Lobby</h3>
+    <p id="joinStatus">No player joined yet</p>
+    <p id="joinTimer">⏳ Time left: 60s</p>
+    <button onclick="addHumanPlayer()">Join Game</button>
+  </div>
+
+  <!-- Game Section -->
+  <div id="gameSection" style="display:none;">
+    <div id="cardContainer"></div>
+    <div id="winnerDisplay"></div>
 
     <div class="log-wrapper">
       <strong>🎯 Current Bid:</strong>
       <div class="log-panel" id="logPanel"></div>
     </div>
+
+    <div class="scoreboard-tab" id="scoreboardTab">
+      <h3>📋 Team Details</h3>
+      <div class="grid" id="gridContainer"></div>
+    </div>
   </div>
 
-  <div class="scoreboard-tab" id="scoreboardTab">
-    <h3>📋 Team Details</h3>
-    <div class="grid" id="gridContainer"></div>
-  </div>
-
-  <!-- Modal -->
-<div id="teamSelectModal" class="modal">
+  <!-- Team Select Modal -->
+  <div id="teamSelectModal" class="modal">
   <div class="modal-content">
     <h3>Select Your Team</h3>
     <div id="teamList"></div>
     <button onclick="confirmTeam()">Confirm</button>
   </div>
 </div>
+
+
+  <!-- Bid Modal -->
   <div id="bidModal" class="modal">
     <div class="modal-content">
       <p id="modalPrompt"></p>
@@ -37,13 +49,13 @@
       <div class="timer-bar">
         <div class="timer-fill" id="timerFill"></div>
       </div>
-      <input type="number" id="bidInput" placeholder="Enter your bid">
-      <br>
+      <input type="number" id="bidInput" placeholder="Enter your bid" />
+      <br />
       <button onclick="submitBid()">Submit</button>
       <button onclick="skipBid()">Skip</button>
     </div>
   </div>
 
-<script src="https://arunautogit.github.io/my-game/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
